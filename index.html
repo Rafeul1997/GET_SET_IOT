@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programming Arduino — Digital Learning Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <button id="menuToggle" class="icon-btn" aria-label="Toggle Menu">☰</button>
+      <span class="brand-title">⚡ Arduino Digital Lab</span>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-badge">UNO R3</div>
+        <div>
+          <h1>Programming Arduino</h1>
+          <p class="subtitle">Interactive Course Portal</p>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search topics, functions, sketches..." />
+      </div>
+
+      <div class="progress-card">
+        <div class="progress-header">
+          <span>Course Progress</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div id="progressBarFill" class="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <nav class="chapter-nav" id="chapterNav">
+        <!-- Populated dynamically via JS -->
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="openLabBtn" class="lab-trigger-btn">🎛️ Interactive Simulators</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div id="lessonView" class="lesson-container">
+        <!-- Populated dynamically via JS -->
+      </div>
+
+      <!-- Interactive Simulator Drawer/View -->
+      <div id="simulatorView" class="lesson-container hidden">
+        <div class="lesson-header">
+          <span class="chapter-tag">HANDS-ON LAB</span>
+          <h2>Interactive Arduino Simulators</h2>
+          <p class="lead">Experiment with PWM duty cycles, analog-to-digital conversion (ADC), and Morse code translation directly in your browser.</p>
+        </div>
+
+        <div class="sim-grid">
+          <!-- Simulator 1: PWM & Analog Pin Lab -->
+          <div class="sim-card">
+            <h3>1. PWM Output & Analog Voltage Lab (Ch. 6)</h3>
+            <p>Test <code>analogWrite(pin, value)</code> (0–255) and observe average DC voltage & LED brightness.</p>
+            <div class="control-group">
+              <label for="pwmSlider">PWM Value (0–255): <strong id="pwmValDisplay">128</strong></label>
+              <input type="range" id="pwmSlider" min="0" max="255" value="128" />
+            </div>
+            <div class="meter-row">
+              <div class="meter-box">
+                <span class="meter-label">Duty Cycle</span>
+                <span id="dutyDisplay" class="meter-value">50.2%</span>
+              </div>
+              <div class="meter-box">
+                <span class="meter-label">Avg Voltage</span>
+                <span id="voltDisplay" class="meter-value">2.51 V</span>
+              </div>
+              <div class="meter-box">
+                <span class="meter-label">Simulated LED</span>
+                <div id="simLed" class="sim-led"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulator 2: Morse Code Translator (Ch. 5) -->
+          <div class="sim-card">
+            <h3>2. Sketch 5-05: Morse Code LED Translator</h3>
+            <p>Type text below to flash Pin 13 LED using the book's <code>letters[]</code> and <code>numbers[]</code> lookup tables.</p>
+            <div class="morse-input-row">
+              <input type="text" id="morseText" maxlength="20" placeholder="Enter e.g. SOS" value="SOS" />
+              <button id="playMorseBtn" class="primary-btn">Flash Pin 13</button>
+            </div>
+            <div class="morse-output">
+              <div>Morse Pattern: <code id="morseCodeDisplay">... --- ...</code></div>
+              <div class="board-led-indicator">
+                <span>Pin 13 (L):</span>
+                <div id="morseLed" class="uno-led"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulator 3: Data Types & Memory Overflow Calculator (Ch. 4 & 8) -->
+          <div class="sim-card">
+            <h3>3. Arduino Data Type & Range Checker (Ch. 4)</h3>
+            <p>Check how ATmega328 16-bit <code>int</code> and 8-bit <code>byte</code> handle values and overflow.</p>
+            <div class="control-group">
+              <label for="typeSelect">Select C Data Type:</label>
+              <select id="typeSelect">
+                <option value="byte">byte (1 byte: 0 to 255)</option>
+                <option value="int" selected>int (2 bytes: -32,768 to 32,767)</option>
+                <option value="unsigned_int">unsigned int (2 bytes: 0 to 65,535)</option>
+                <option value="float">float (4 bytes: 32-bit IEEE 754)</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="numInput">Enter Test Number:</label>
+              <input type="number" id="numInput" value="32768" />
+            </div>
+            <div id="typeResultBox" class="code-alert"></div>
+          </div>
+        </div>
+
+        <button id="backToLessonsBtn" class="secondary-btn" style="margin-top: 1.5rem;">← Back to Chapters</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
